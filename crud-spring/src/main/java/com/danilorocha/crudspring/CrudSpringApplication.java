@@ -1,7 +1,8 @@
 package com.danilorocha.crudspring;
 
-import com.danilorocha.crudspring.model.Curso;
-import com.danilorocha.crudspring.repository.CursoRepository;
+import com.danilorocha.crudspring.domain.model.Curso;
+import com.danilorocha.crudspring.domain.repository.CursoRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,8 @@
-package com.danilorocha.crudspring.controller;
+package com.danilorocha.crudspring.api.controller;
 
-import com.danilorocha.crudspring.model.Curso;
-import com.danilorocha.crudspring.repository.CursoRepository;
+import com.danilorocha.crudspring.domain.model.Curso;
+import com.danilorocha.crudspring.domain.repository.CursoRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.danilorocha.crudspring.model;
+package com.danilorocha.crudspring.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

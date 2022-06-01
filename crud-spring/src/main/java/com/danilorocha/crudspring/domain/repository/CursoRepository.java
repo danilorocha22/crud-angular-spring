@@ -1,6 +1,7 @@
-package com.danilorocha.crudspring.repository;
+package com.danilorocha.crudspring.domain.repository;
 
-import com.danilorocha.crudspring.model.Curso;
+import com.danilorocha.crudspring.domain.model.Curso;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
