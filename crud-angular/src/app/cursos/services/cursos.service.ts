@@ -10,7 +10,7 @@ import { Curso } from './../models/curso';
 })
 export class CursosService {
 
-  private readonly API = 'cursos';
+  private readonly API = 'api/v1/cursos';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,8 +22,8 @@ export class CursosService {
       );
   }
 
-  salve(registro: Curso) {
-    return this.httpClient.post<Curso>( environment.BASE_URL + this.API, registro)
+  save(curso: Curso) {
+    return this.httpClient.post<Curso>(environment.BASE_URL + this.API, curso)
     .pipe(first()) //pipe(first()) não é necessário
   }
 

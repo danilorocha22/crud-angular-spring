@@ -43,11 +43,12 @@ export class CursosComponent implements OnInit {
     });
   }
 
-  //controla o ciclo de vida do componente
-  ngOnInit(): void {}
 
   onAdd() {
     this.router.navigate(['novo'], {relativeTo: this.route})
   }
+
+  //controla o ciclo de vida do componente
+  ngOnInit(): void {}
 
 }
