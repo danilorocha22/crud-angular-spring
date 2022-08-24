@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 
-import java.util.Optional;
-
 @AllArgsConstructor
 @Service
 public class CursoService {
@@ -25,4 +23,5 @@ public class CursoService {
         curso.setCategoria(c.getCategoria());
         return repo.saveAndFlush(curso);
     }
+    
 }

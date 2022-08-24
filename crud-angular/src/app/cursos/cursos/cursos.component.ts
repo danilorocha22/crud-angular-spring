@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {catchError, Observable, of} from 'rxjs';
+import {ErrorDialogComponent} from 'src/app/shared/components/error-dialog/error-dialog.component';
 
-import { Curso } from './../models/curso';
-import { CursosService } from './../services/cursos.service';
+import {Curso} from '../models/curso';
+import {CursosService} from '../services/cursos.service';
 
 @Component({
   selector: 'app-cursos',
@@ -14,8 +14,7 @@ import { CursosService } from './../services/cursos.service';
 })
 export class CursosComponent implements OnInit {
 
-  cursos$: Observable<Curso[]>;
-  displayedColumns = ['nome', 'categoria', 'acoes'];
+  cursos$: Observable<Curso[]>
   //cursosService: CursosService;
 
   constructor(
@@ -33,8 +32,6 @@ export class CursosComponent implements OnInit {
         return of([]);
       })
     );
-
-
   }
 
   onError(errorMsg: string) {
@@ -42,7 +39,6 @@ export class CursosComponent implements OnInit {
       data: errorMsg
     });
   }
-
 
   onAdd() {
     this.router.navigate(['novo'], {relativeTo: this.route})

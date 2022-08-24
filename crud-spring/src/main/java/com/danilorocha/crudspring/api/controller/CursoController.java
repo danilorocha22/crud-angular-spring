@@ -18,7 +18,7 @@ public class CursoController {
     private final CursoRepository cursoRepository;
     private final CursoService cursoService;
 
-    //@RequestMapping(method = RequestMethod.GET) mesma coisa que a anotação abaixo
+    // @RequestMapping(method = RequestMethod.GET) mesma coisa que a anotação abaixo
     @GetMapping
     public ResponseEntity<List<Curso>> list() {
         return ResponseEntity.ok(cursoRepository.findAll());
@@ -29,11 +29,11 @@ public class CursoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(curso));
     }
 
-    //@ResponseStatus(HttpStatus.ACCEPTED) //pode ser usado no lugar da classe ResponseEntity
+    // @ResponseStatus(HttpStatus.ACCEPTED) //pode ser usado no lugar da classe
+    // ResponseEntity
     @PutMapping("/{id}")
     public ResponseEntity<Curso> update(@PathVariable Long id, @RequestBody Curso curso) {
         return new ResponseEntity<>(cursoService.update(id, curso), HttpStatus.ACCEPTED);
     }
-    
 
 }
