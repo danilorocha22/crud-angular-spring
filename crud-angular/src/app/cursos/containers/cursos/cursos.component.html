@@ -2,12 +2,13 @@
   <mat-toolbar color="primary"><span>Cursos Disponíveis</span></mat-toolbar>
 
   <div class="column-flex mat-elevation-z8">
-    <!-- Se tiver tiver dados no Observable, teremos uma variável
+    <!-- Se houver dados no Observable, teremos uma variável
     chamada 'cursos$', se não, carrega o spinner 'loading'.
-    Despois disso devemos fazer o data-bind de cursos: [cursos]="cursos" -->
+    Depois disto devemos fazer o data-bind de cursos: [cursos]="cursos" -->
     <app-cursos-list
       *ngIf="cursos$ | async as cursos; else loading"
-      [cursos]="cursos">
+      [cursos]="cursos" (add)="onAdd()">
+
     </app-cursos-list>
 
     <ng-template #loading>

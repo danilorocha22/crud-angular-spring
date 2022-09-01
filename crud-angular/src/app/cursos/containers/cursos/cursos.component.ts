@@ -4,8 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {ErrorDialogComponent} from 'src/app/shared/components/error-dialog/error-dialog.component';
 
-import {Curso} from '../models/curso';
-import {CursosService} from '../services/cursos.service';
+import {Curso} from '../../models/curso';
+import {CursosService} from '../../services/cursos.service';
 
 @Component({
   selector: 'app-cursos',
