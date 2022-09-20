@@ -1,4 +1,4 @@
-package com.danilorocha.crudspring.domain.model;
+package com.danilorocha.crudspring.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;

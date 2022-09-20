@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
-import {catchError, Observable, of} from 'rxjs';
-import {ErrorDialogComponent} from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, Observable, of } from 'rxjs';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
-import {Curso} from '../../models/curso';
-import {CursosService} from '../../services/cursos.service';
+import { Curso } from '../../models/curso';
+import { CursosService } from '../../services/cursos.service';
 
 @Component({
   selector: 'app-cursos',
@@ -19,19 +19,19 @@ export class CursosComponent implements OnInit {
 
   constructor(
     private cursosService: CursosService,
-     public dialog: MatDialog,
+    public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute
-    ) {
+  ) {
     //this.cursos = [];
     //this.cursosService = new CursosService();//injeção de dependência
     this.cursos$ = this.cursosService.list()
-    .pipe(
-      catchError(error => {
-        this.onError('Não foi possível carregar os cursos, tente novamente mais tarde.')
-        return of([]);
-      })
-    );
+      .pipe(
+        catchError(() => {
+          this.onError('Não foi possível carregar os cursos, tente novamente mais tarde.')
+          return of([]);
+        })
+      );
   }
 
   onError(errorMsg: string) {
@@ -41,10 +41,14 @@ export class CursosComponent implements OnInit {
   }
 
   onAdd() {
-    this.router.navigate(['novo'], {relativeTo: this.route})
+    this.router.navigate(['novo'], { relativeTo: this.route })
+  }
+
+  onEdit(curso: Curso) {
+    this.router.navigate(['editar', curso._id], { relativeTo: this.route })
   }
 
   //controla o ciclo de vida do componente
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
 }
