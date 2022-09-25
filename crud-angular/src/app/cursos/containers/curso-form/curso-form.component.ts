@@ -1,9 +1,11 @@
-import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {NonNullableFormBuilder} from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { Curso } from './../../models/curso';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { NonNullableFormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
-import {CursosService} from '../../services/cursos.service';
+import { CursosService } from '../../services/cursos.service';
 
 @Component({
   selector: 'app-curso-form',
@@ -13,6 +15,7 @@ import {CursosService} from '../../services/cursos.service';
 export class CursoFormComponent implements OnInit {
 
   form = this.formBuilder.group({
+    _id: [''],
     nome: [''],
     categoria: ['']
   })
@@ -21,41 +24,50 @@ export class CursoFormComponent implements OnInit {
     private formBuilder: NonNullableFormBuilder,
     private service: CursosService,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private activatedRoute: ActivatedRoute
   ) {
-    //this.form
   }
 
-  ngOnInit(): void {}
+  ngOnInit():void {
+    const CURSO:Curso = this.activatedRoute.snapshot.data['curso']
+    this.form.setValue({
+      _id: CURSO._id,
+      nome: CURSO.nome,
+      categoria: CURSO.categoria
+    })
+
+  }
 
   onSubmit() {
     this.service.save(this.form.value)
-    .subscribe({
-      next: () => this.onSuccess(),
-      error: () => this.onError(),
-      complete: () => console.info('complete')
-    })
-  }
-
-  onSuccess() {
-    this.snackBar.open(
-      'Curso salvo com sucesso.',
-      'Fechar',
-      {duration:3000}
-    )
-    this.onCancel()
-  }
-
-  onError() {
-    this.snackBar.open(
-      'Erro ao tentar salvar curso.',
-      'Fechar',
-      {duration:3000}
-      )
+      .subscribe({
+        next: () => this.onSuccess(),
+        error: () => this.onError(),
+        complete: () => console.info('save completed')
+      })
   }
 
   onCancel() {
     this.location.back()
   }
+
+  private onSuccess() {
+    this.snackBar.open(
+      'Curso salvo com sucesso.',
+      'X',
+      { duration: 3000 }
+    )
+    this.onCancel()
+  }
+
+  private onError() {
+    this.snackBar.open(
+      'Erro ao tentar salvar curso.',
+      'X',
+      { duration: 3000 }
+    )
+  }
+
 
 }

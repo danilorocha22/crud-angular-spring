@@ -1,21 +1,30 @@
 package com.danilorocha.crudspring.api.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.danilorocha.crudspring.api.model.CursoModel;
 import com.danilorocha.crudspring.domain.entities.Curso;
 import com.danilorocha.crudspring.domain.repositories.CursoRepository;
 import com.danilorocha.crudspring.domain.services.CursoService;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("cursos")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/cursos")
 public class CursoController {
 
     private final CursoRepository cursoRepository;
@@ -46,7 +55,7 @@ public class CursoController {
         return new ResponseEntity<>(cursoService.update(id, cursoModel), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void delelteCurso(@PathVariable Long id) {
         cursoRepository.deleteById(id);
     }

@@ -14,16 +14,13 @@ export class CursosListComponent implements OnInit {
   // @ts-ignore
   @Output() add = new EventEmitter(false)
   @Output() edit = new EventEmitter(false)
+  @Output() delete = new EventEmitter(false)
   // readonly: é uma propriedade do TS para deixar o objeto como final
   readonly displayedColumns = ['nome', 'categoria', 'acoes'];
 
-  constructor(
-    /*private router: Router,
-    private route: ActivatedRoute*/
-  ) { }
+  constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onAdd() {
     //this.router.navigate(['novo'], {relativeTo: this.route})
@@ -34,5 +31,11 @@ export class CursosListComponent implements OnInit {
   onEdit(curso: Curso) {
     this.edit.emit(curso)
   }
+
+  onDelete(curso: Curso) {
+    this.delete.emit(curso)
+  }
+
+
 
 }
