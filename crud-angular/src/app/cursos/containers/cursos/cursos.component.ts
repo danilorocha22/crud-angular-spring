@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { CursosService } from '../../services/cursos.service';
   templateUrl: './cursos.component.html',
   styleUrls: ['./cursos.component.scss']
 })
-export class CursosComponent implements OnInit {
+export class CursosComponent {
 
   cursos$: Observable<Curso[]> | null = null;
 
@@ -37,12 +37,6 @@ export class CursosComponent implements OnInit {
       );
   }
 
-  onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg
-    });
-  }
-
   onAdd() {
     this.router.navigate(['novo'], { relativeTo: this.route })
   }
@@ -55,19 +49,26 @@ export class CursosComponent implements OnInit {
     this.cursosService.remove(curso._id)
       .subscribe({
         next: () => {
-          this.refresh(),
-            this.snackBar.open('Curso removido com sucesso!', 'X', {
-              duration: 3000,
-              verticalPosition: 'top',
-              horizontalPosition: 'center'
-            })
+          this.refresh()
+          this.onSuccess('Curso removido com sucesso!')
         },
         error: () => this.onError('Erro ao tentar remover curso.'),
         complete: () => console.info('remove completed')
       })
   }
 
-  //controla o ciclo de vida do componente
-  ngOnInit(): void { }
+  onError(errorMsg: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg
+    });
+  }
+
+  onSuccess(msg: string) {
+    this.snackBar.open(msg, 'X', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+    })
+  }
 
 }
