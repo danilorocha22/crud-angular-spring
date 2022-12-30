@@ -44,7 +44,7 @@ export class CursoFormComponent implements OnInit {
       .subscribe({
         next: () => this.onSuccess(),
         error: () => this.onError(),
-        complete: () => console.info('save completed')
+        complete: () => console.info('save finish')
       })
   }
 
