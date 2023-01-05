@@ -38,7 +38,7 @@ public class CursoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Curso> curso(@PathVariable Long id) {
-        return cursoService.getCurso(id)
+        return cursoRepository.findById(id)
                 .map(curso -> ResponseEntity.ok().body(curso))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -50,14 +50,37 @@ public class CursoController {
 
     // @ResponseStatus(HttpStatus.ACCEPTED) //pode ser usado no lugar da classe
     // ResponseEntity
+    /*
+     * @PutMapping("/{id}")
+     * public ResponseEntity<Curso> updateCurso(@PathVariable Long id, @RequestBody
+     * CursoModel cursoModel) {
+     * return new ResponseEntity<>(cursoService.update(id, cursoModel),
+     * HttpStatus.ACCEPTED);
+     * }
+     */
+
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> updateCurso(@PathVariable Long id, @RequestBody CursoModel cursoModel) {
-        return new ResponseEntity<>(cursoService.update(id, cursoModel), HttpStatus.ACCEPTED);
+    public ResponseEntity<Curso> updateCurso(@PathVariable Long id,
+        @RequestBody CursoModel cursoModel) {
+        return cursoRepository.findById(id)
+        .map(cursoEncontrado -> {
+            cursoEncontrado.setNome(cursoModel.getNome());
+            cursoEncontrado.setCategoria(cursoModel.getCategoria());
+            Curso cursoAtualizado = cursoRepository.saveAndFlush(cursoEncontrado);
+            return ResponseEntity.ok().body(cursoAtualizado);
+
+        })
+        .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void delelteCurso(@PathVariable Long id) {
-        cursoRepository.deleteById(id);
+    public ResponseEntity<Void> delelteCurso(@PathVariable Long id) {
+        return cursoRepository.findById(id)
+        .map(cursoEncontrado -> {
+            cursoRepository.delete(cursoEncontrado);
+            return ResponseEntity.noContent().<Void>build();
+        })
+        .orElse(ResponseEntity.notFound().build());
     }
-
+ 
 }
