@@ -1,11 +1,11 @@
-import { Curso } from './../../models/curso';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Curso } from './../../models/curso';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
-import { CursosService } from '../../services/cursos.service';
+import { CursosService } from '../../../shared/services/cursos/cursos.service';
 
 @Component({
   selector: 'app-curso-form',
@@ -23,7 +23,7 @@ export class CursoFormComponent implements OnInit {
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private service: CursosService,
-    private snackBar: MatSnackBar,
+    private alert: AlertService,
     private location: Location,
     private activatedRoute: ActivatedRoute
   ) {
@@ -40,44 +40,42 @@ export class CursoFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.save(this.form.value)
-      .subscribe({
-        next: () => {
-          if (this.form.value._id)
-            this.onSuccess('atualizado')
-          else
-            this.onSuccess('salvo')
-        },
-        error: () => {
-          if (this.form.value._id)
-            this.onError('atualizar')
-          else
-            this.onError('salvar')
-        },
-        complete: () => console.info('metodo save finalizado')
-      })
+    if(this.form.value.nome != '' && this.form.value.categoria != '' &&
+     this.form.value.categoria != 'null') {
+
+      this.service.save(this.form.value)
+        .subscribe({
+          next: () => {
+            if (this.form.value._id)
+              this.alert.show('Curso atualizado com sucesso.')
+            else
+              this.alert.show('Curso salvo com sucesso.')
+
+            this.onCancel()
+          },
+          error: () => {
+            if (this.form.value._id)
+              this.alert.show('Não foi possível atualizar o curso.')
+            else
+              this.alert.show('Não foi possível salvar o curso.')
+          },
+          complete: () => console.info('metodo de salvar finalizado')
+        })
+    } else{
+      this.alert.show('Informe os dados para salvar')
+    }
   }
 
   onCancel() {
     this.location.back()
   }
 
-  private onSuccess(msg: string) {
-    this.snackBar.open(
-      `Curso ${msg} com sucesso.`,
-      'X',
-      { duration: 3000 }
-    )
-    this.onCancel()
-  }
-
-  private onError(msg: string) {
-    this.snackBar.open(
-      `Erro ao tentar ${msg} curso.`,
-      'X',
-      { duration: 3000 }
-    )
-  }
-
+  /* private alert(msg: string) {
+    this.snackBar.open(msg, 'X', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+    })
+  } */
 
 }
