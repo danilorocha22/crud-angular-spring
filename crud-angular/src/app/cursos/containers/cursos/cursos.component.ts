@@ -1,6 +1,6 @@
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
@@ -17,6 +17,7 @@ import { CursosService } from '../../services/cursos.service';
 export class CursosComponent {
 
   cursos$: Observable<Curso[]> | null = null;
+  dialogRef: MatDialogRef<ConfirmDialogComponent, any> | undefined
 
   constructor(
     private cursosService: CursosService,
@@ -47,21 +48,23 @@ export class CursosComponent {
   }
 
   onDelete(curso: Curso) {
+    this.onDialog('Excluir?', `Deseja excluir o curso ${curso.nome}?`)
 
-    let res = this.onDialog('Excluir!', `Deseja excluir o curso ${curso.nome}?`)
-    console.log(res)
-  
+    this.dialogRef!.afterClosed().subscribe(res => {
+      console.log(Boolean(res))
 
-    /* this.cursosService.remove(curso._id)
-      .subscribe({
-        next: () => {
-          this.refresh()
-          this.onSuccess('Curso removido com sucesso!')
-        },
-        error: () => this.onError('Erro ao tentar remover curso.'),
-        complete: () => console.info('remove completed')
-      }) */
-
+      if (Boolean(res)) {
+        this.cursosService.remove(curso._id)
+          .subscribe({
+            next: () => {
+              this.refresh()
+              this.onSuccess('Curso removido com sucesso!')
+            },
+            error: () => this.onError('Erro ao tentar remover curso.'),
+            complete: () => console.info('remove completed')
+          })
+      }
+    })
   }
 
   onError(errorMsg: string) {
@@ -79,16 +82,9 @@ export class CursosComponent {
   }
 
   onDialog(titulo: string, msg: string) {
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    this.dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: { titulo, msg }
     })
-
-    dialogRef.afterClosed().subscribe(res => {
-      //console.log(Boolean(res))
-      return Boolean(res)
-    })
-
   }
 
 }
