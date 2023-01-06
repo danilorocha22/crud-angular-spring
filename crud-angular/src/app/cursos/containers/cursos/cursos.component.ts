@@ -1,9 +1,10 @@
+import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
-import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 import { Curso } from '../../models/curso';
 import { CursosService } from '../../services/cursos.service';
@@ -46,7 +47,12 @@ export class CursosComponent {
   }
 
   onDelete(curso: Curso) {
-    this.cursosService.remove(curso._id)
+
+    let res = this.onDialog('Excluir!', `Deseja excluir o curso ${curso.nome}?`)
+    console.log(res)
+  
+
+    /* this.cursosService.remove(curso._id)
       .subscribe({
         next: () => {
           this.refresh()
@@ -54,11 +60,12 @@ export class CursosComponent {
         },
         error: () => this.onError('Erro ao tentar remover curso.'),
         complete: () => console.info('remove completed')
-      })
+      }) */
+
   }
 
   onError(errorMsg: string) {
-    this.dialog.open(DialogComponent, {
+    this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
   }
@@ -69,6 +76,19 @@ export class CursosComponent {
       verticalPosition: 'top',
       horizontalPosition: 'center'
     })
+  }
+
+  onDialog(titulo: string, msg: string) {
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { titulo, msg }
+    })
+
+    dialogRef.afterClosed().subscribe(res => {
+      //console.log(Boolean(res))
+      return Boolean(res)
+    })
+
   }
 
 }
