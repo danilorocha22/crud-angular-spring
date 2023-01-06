@@ -29,8 +29,8 @@ export class CursoFormComponent implements OnInit {
   ) {
   }
 
-  ngOnInit():void {
-    const CURSO:Curso = this.activatedRoute.snapshot.data['curso']
+  ngOnInit(): void {
+    const CURSO: Curso = this.activatedRoute.snapshot.data['curso']
     this.form.setValue({
       _id: CURSO._id,
       nome: CURSO.nome,
@@ -42,9 +42,19 @@ export class CursoFormComponent implements OnInit {
   onSubmit() {
     this.service.save(this.form.value)
       .subscribe({
-        next: () => this.onSuccess(),
-        error: () => this.onError(),
-        complete: () => console.info('save finish')
+        next: () => {
+          if (this.form.value._id)
+            this.onSuccess('atualizado')
+          else
+            this.onSuccess('salvo')
+        },
+        error: () => {
+          if (this.form.value._id)
+            this.onError('atualizar')
+          else
+            this.onError('salvar')
+        },
+        complete: () => console.info('metodo save finalizado')
       })
   }
 
@@ -52,18 +62,18 @@ export class CursoFormComponent implements OnInit {
     this.location.back()
   }
 
-  private onSuccess() {
+  private onSuccess(msg: string) {
     this.snackBar.open(
-      'Curso salvo com sucesso.',
+      `Curso ${msg} com sucesso.`,
       'X',
       { duration: 3000 }
     )
     this.onCancel()
   }
 
-  private onError() {
+  private onError(msg: string) {
     this.snackBar.open(
-      'Erro ao tentar salvar curso.',
+      `Erro ao tentar ${msg} curso.`,
       'X',
       { duration: 3000 }
     )

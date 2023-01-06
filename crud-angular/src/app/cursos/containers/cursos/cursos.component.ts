@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
-import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 
 import { Curso } from '../../models/curso';
 import { CursosService } from '../../services/cursos.service';
@@ -58,7 +58,7 @@ export class CursosComponent {
   }
 
   onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
+    this.dialog.open(DialogComponent, {
       data: errorMsg
     });
   }

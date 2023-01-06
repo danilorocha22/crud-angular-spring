@@ -6,7 +6,7 @@ import { Curso } from "../../models/curso";
   templateUrl: './cursos-list.component.html',
   styleUrls: ['./cursos-list.component.scss']
 })
-export class CursosListComponent implements OnInit {
+export class CursosListComponent {
 
   // @Input(): é um decorator, para passar os cursos do componente pai (cursos) para o componente filho (cursos-list)
   @Input() cursos: Curso[] = [];
@@ -17,10 +17,6 @@ export class CursosListComponent implements OnInit {
   @Output() delete = new EventEmitter(false)
   // readonly: é uma propriedade do TS para deixar o objeto como final
   readonly displayedColumns = ['nome', 'categoria', 'acoes'];
-
-  constructor() { }
-
-  ngOnInit(): void { }
 
   onAdd() {
     //this.router.navigate(['novo'], {relativeTo: this.route})
