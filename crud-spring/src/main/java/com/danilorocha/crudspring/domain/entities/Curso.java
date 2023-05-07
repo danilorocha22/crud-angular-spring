@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Setter
 @Getter
@@ -20,9 +20,12 @@ public class Curso {
     @JsonProperty("_id")
     private Long id;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 100, nullable = false)
     private String nome;
 
     @Column(length = 12, nullable = false)
     private String categoria;
+
+    @Column(length = 10, nullable = false)
+    private String status;
 }
