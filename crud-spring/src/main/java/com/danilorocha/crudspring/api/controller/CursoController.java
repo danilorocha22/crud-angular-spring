@@ -32,36 +32,31 @@ public class CursoController {
 
     // @RequestMapping(method = RequestMethod.GET) mesma coisa que a anotação abaixo
     @GetMapping
-    public ResponseEntity<List<Curso>> cursos() {
+    public ResponseEntity<List<Curso>> listarCursos() {
         return ResponseEntity.ok(cursoRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> curso(@PathVariable Long id) {
+    public ResponseEntity<Curso> buscarCurso(@PathVariable Long id) {
         return cursoRepository.findById(id)
                 .map(curso -> ResponseEntity.ok().body(curso))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping()
-    public ResponseEntity<Curso> createCurso(@RequestBody CursoModel cursoModel) {
+    public ResponseEntity<Curso> criarCurso(@RequestBody CursoModel cursoModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(cursoModel));
     }
 
-    // @ResponseStatus(HttpStatus.ACCEPTED) //pode ser usado no lugar da classe
-    // ResponseEntity
-    /*
+    /* @ResponseStatus(HttpStatus.ACCEPTED) //pode ser usado no lugar da classe ResponseEntity
      * @PutMapping("/{id}")
-     * public ResponseEntity<Curso> updateCurso(@PathVariable Long id, @RequestBody
-     * CursoModel cursoModel) {
-     * return new ResponseEntity<>(cursoService.update(id, cursoModel),
-     * HttpStatus.ACCEPTED);
+     * public ResponseEntity<Curso> atualizarCurso(@PathVariable Long id, @RequestBody CursoModel cursoModel) {
+     *      return new ResponseEntity<>(cursoService.update(id, cursoModel), HttpStatus.ACCEPTED);
      * }
      */
 
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> updateCurso(@PathVariable Long id,
-        @RequestBody CursoModel cursoModel) {
+    public ResponseEntity<Curso> atualizarCurso(@PathVariable Long id, @RequestBody CursoModel cursoModel) {
         return cursoRepository.findById(id)
         .map(cursoEncontrado -> {
             cursoEncontrado.setNome(cursoModel.getNome());
@@ -74,7 +69,7 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delelteCurso(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarCurso(@PathVariable Long id) {
         return cursoRepository.findById(id)
         .map(cursoEncontrado -> {
             cursoRepository.delete(cursoEncontrado);
