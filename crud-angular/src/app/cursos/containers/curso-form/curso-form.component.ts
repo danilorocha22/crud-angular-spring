@@ -16,10 +16,10 @@ export class CursoFormComponent implements OnInit {
 
   form = this.formBuilder.group({
     _id: [''],
-    nome: ['',
+    nome: ['',[
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(100)],
+      Validators.maxLength(100)]],
     categoria: ['',
       Validators.required]
   })
@@ -35,6 +35,7 @@ export class CursoFormComponent implements OnInit {
 
   ngOnInit(): void {
     const curso: Curso = this.activatedRoute.snapshot.data['curso']
+    console.log(curso)
     this.form.setValue({
       _id: curso._id,
       nome: curso.nome,

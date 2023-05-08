@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 
 import { Curso } from '../../models/curso';
@@ -39,21 +39,23 @@ export class CursosComponent {
       );
   }
 
-  onAdd() {
-    this.router.navigate(['novo'], { relativeTo: this.route })
-  }
+  onAdd() :void {
+    this.router.navigate(['novo'], {relativeTo: this.route})
+      .then(r => console.log(`Sucesso para rota Novo: ${r}`))
+   }
 
-  onEdit(curso: Curso) {
-    this.router.navigate(['editar', curso._id], { relativeTo: this.route })
-  }
+  onEdit(curso: Curso) :void {
+    this.router.navigate(['editar', curso._id], {relativeTo: this.route})
+      .then(r => console.log(`Sucesso para rota Editar: ${r}`))
+   }
 
-  onDelete(curso: Curso) {
+  onDelete(curso: Curso) :void {
     this.onDialog('Excluir?', `Deseja excluir o curso ${curso.nome}?`)
 
     this.dialogRef!.afterClosed().subscribe(res => {
       console.log(Boolean(res))
 
-      if (Boolean(res)) {
+      if (res) {
         this.cursosService.remove(curso._id)
           .subscribe({
             next: () => {

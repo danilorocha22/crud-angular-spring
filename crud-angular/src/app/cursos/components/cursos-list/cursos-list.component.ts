@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Curso } from "../../models/curso";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Curso} from "../../models/curso";
 
 @Component({
   selector: 'app-cursos-list',
@@ -12,11 +12,11 @@ export class CursosListComponent {
   @Input() cursos: Curso[] = [];
   // @Output():
   // @ts-ignore
-  @Output() add = new EventEmitter(false)
-  @Output() edit = new EventEmitter(false)
-  @Output() delete = new EventEmitter(false)
+  @Output() add: EventEmitter<any> = new EventEmitter(false)
+  @Output() edit: EventEmitter<any> = new EventEmitter(false)
+  @Output() delete: EventEmitter<any> = new EventEmitter(false)
   // readonly: é uma propriedade do TS para deixar o objeto como final
-  readonly displayedColumns = ['nome', 'categoria', 'acoes'];
+  readonly displayedColumns: string[] = ['nome', 'categoria', 'acoes'];
 
   onAdd() {
     //this.router.navigate(['novo'], {relativeTo: this.route})
@@ -24,14 +24,13 @@ export class CursosListComponent {
     this.add.emit(true)
   }
 
-  onEdit(curso: Curso) {
+  onEdit(curso: Curso): void {
     this.edit.emit(curso)
   }
 
-  onDelete(curso: Curso) {
+  onDelete(curso: Curso): void {
     this.delete.emit(curso)
   }
-
 
 
 }
