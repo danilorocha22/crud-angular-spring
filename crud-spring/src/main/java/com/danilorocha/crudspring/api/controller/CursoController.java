@@ -2,8 +2,12 @@ package com.danilorocha.crudspring.api.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,7 @@ import com.danilorocha.crudspring.domain.services.CursoService;
 
 import lombok.AllArgsConstructor;
 
+@Validated
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
@@ -37,14 +42,14 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> buscarCurso(@PathVariable Long id) {
+    public ResponseEntity<Curso> buscarCurso(@PathVariable @NotNull @Positive Long id) {
         return cursoRepository.findById(id)
                 .map(curso -> ResponseEntity.ok().body(curso))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping()
-    public ResponseEntity<Curso> criarCurso(@RequestBody CursoModel cursoModel) {
+    public ResponseEntity<Curso> criarCurso(@RequestBody @Valid CursoModel cursoModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(cursoModel));
     }
 
@@ -56,7 +61,8 @@ public class CursoController {
      */
 
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> atualizarCurso(@PathVariable Long id, @RequestBody CursoModel cursoModel) {
+    public ResponseEntity<Curso> atualizarCurso(@PathVariable @NotNull @Positive  Long id,
+                                                @Valid @RequestBody CursoModel cursoModel) {
         return cursoRepository.findById(id)
         .map(cursoEncontrado -> {
             cursoEncontrado.setNome(cursoModel.getNome());
@@ -69,7 +75,7 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarCurso(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarCurso(@PathVariable @NotNull @Positive Long id) {
         return cursoRepository.findById(id)
         .map(cursoEncontrado -> {
             cursoRepository.delete(cursoEncontrado);

@@ -1,18 +1,24 @@
 package com.danilorocha.crudspring.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
-import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Setter
 @Getter
-@RequiredArgsConstructor
 @Entity
+@RequiredArgsConstructor
+@SQLDelete(sql = "UPDATE Curso SET status = 'Inativo' WHERE id = ?")
+@Where(clause = "status = 'Ativo'")
 public class Curso {
 
     @Id
@@ -27,6 +33,7 @@ public class Curso {
     @Column(length = 100, nullable = false)
     private String nome;
 
+    @NotBlank
     @NotNull
     @Size(min = 8, max = 9)
     @Pattern(regexp = "Back-end|Front-end")
@@ -40,3 +47,4 @@ public class Curso {
     private String status = "Ativo";
 
 }
+
