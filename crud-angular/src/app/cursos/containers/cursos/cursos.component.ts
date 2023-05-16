@@ -17,7 +17,7 @@ import { CursosService } from '../../../shared/services/cursos/cursos.service';
 export class CursosComponent {
 
   cursos$: Observable<Curso[]> | null = null
-  dialogRef: MatDialogRef<ConfirmDialogComponent, any> | null = null
+  dialogRef: MatDialogRef<ConfirmDialogComponent> | null = null
 
   constructor(
     private cursosService: CursosService,
