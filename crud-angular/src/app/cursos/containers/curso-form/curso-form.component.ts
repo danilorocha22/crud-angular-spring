@@ -14,6 +14,8 @@ import {CursosService} from '../../../shared/services/cursos/cursos.service';
 })
 export class CursoFormComponent implements OnInit {
 
+  readonly cursos: Array<string> = ['Front-End', 'Back-End', 'Mobile', 'Full-Stack', 'Banco de Dados'];
+
   form = this.formBuilder.group({
     _id: [''],
     nome: ['',[
