@@ -34,8 +34,8 @@ public class CursoService {
         return mapper.converterToCursoDTO(repo.save(mapper.converterToCurso(cursoDTO)));
     }
 
-    public CursoDTO atualizarCurso(@NotNull @Positive Long id, @RequestBody @Valid @NotNull
-    CursoDTO cursoDTO) {
+    public CursoDTO atualizarCurso(@NotNull @Positive Long id,
+                                   @RequestBody @Valid @NotNull CursoDTO cursoDTO) {
         return repo.findById(id).map(curso -> {
             curso.setNome(cursoDTO.nome());
             curso.setCategoria(mapper.converterCategoryValue(cursoDTO.categoria()));
@@ -45,19 +45,6 @@ public class CursoService {
 
     public void removerCurso(@NotNull @Positive Long id) {
         repo.delete(repo.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException(id)));
-        /*repo.findById(id)
-                .map(cursoEncontrado -> {
-                    repo.delete(cursoEncontrado);
-                    return true;
-                }).orElseThrow(() -> new RegistroNaoEncontradoException(id));*/
     }
 
-    /**
-     * public Curso update(Long id, CursoModel cursoModel) {
-     * Curso curso = repo.getReferenceById(id);
-     * curso.setNome(cursoModel.getNome());
-     * curso.setCategoria(cursoModel.getCategoria());
-     * return repo.saveAndFlush(curso);
-     * }
-     */
 }
