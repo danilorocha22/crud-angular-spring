@@ -14,12 +14,7 @@
       <mat-form-field class="full-width" style="margin-top: 1rem">
         <mat-label>Categoria</mat-label>
         <mat-select formControlName="categoria">
-          <mat-option value="null"></mat-option>
-          <mat-option value="Front-End">Front-End</mat-option>
-          <mat-option value="Back-End">Back-End</mat-option>
-          <mat-option value="Mobile">Back-End</mat-option>
-          <mat-option value="Full-Stack">Back-End</mat-option>
-          <mat-option value="Banco de Dados">Back-End</mat-option>
+          <mat-option  *ngFor="let curso of cursos" [value]="curso">{{ curso }}</mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('categoria')?.invalid">{{getErrorMessage('categoria')}}</mat-error>
       </mat-form-field>
