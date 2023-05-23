@@ -1,22 +1,22 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { Curso } from '../models/curso';
-import { CursosService } from '../../shared/services/cursos/cursos.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {Curso} from '../models/curso';
+import {CursosService} from '../../shared/services/cursos/cursos.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CursoResolver implements Resolve<Curso> {
+export class CursoResolver {
 
   constructor(
     private cursosService: CursosService
   ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Curso> {
+  resolve(route: ActivatedRouteSnapshot): Observable<Curso> {
     if (route.params && route.params['id']) {
       return this.cursosService.getById(route.params['id'])
     }
-    return of({ _id: '', nome: '', categoria: '' });
+    return of({ _id: '', nome: '', categoria: '', aulas: [] });
   }
 }
