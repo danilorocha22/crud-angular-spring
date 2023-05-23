@@ -1,11 +1,12 @@
 import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {NonNullableFormBuilder, Validators} from '@angular/forms';
+import {FormGroup, NonNullableFormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Curso} from '../../models/curso';
 import {AlertService} from '../../../shared/services/alert/alert.service';
 
 import {CursosService} from '../../../shared/services/cursos/cursos.service';
+import {Aula} from "../../models/aula";
 
 @Component({
   selector: 'app-curso-form',
@@ -15,15 +16,7 @@ import {CursosService} from '../../../shared/services/cursos/cursos.service';
 export class CursoFormComponent implements OnInit {
 
   readonly cursos: Array<string> = ['Front-End', 'Back-End', 'Mobile', 'Full-Stack', 'Banco de Dados'];
-
-  form = this.formBuilder.group({
-    _id: [''],
-    nome: ['',[
-      Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(100)]],
-    categoria: ['',[Validators.required]]
-  })
+  form!: FormGroup;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -36,13 +29,33 @@ export class CursoFormComponent implements OnInit {
 
   ngOnInit(): void {
     const curso: Curso = this.activatedRoute.snapshot.data['curso']
-    console.log(curso)
-    this.form.setValue({
-      _id: curso._id,
-      nome: curso.nome,
-      categoria: curso.categoria
+    this.form = this.formBuilder.group({
+      _id: [curso._id],
+      nome: [curso.nome,[
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(100)]],
+      categoria: [curso.categoria,[Validators.required]],
+      aulas: this.formBuilder.array(this.obterAulas(curso))
     })
+  }
 
+  private obterAulas(curso: Curso){
+    const aulas = [];
+    if (curso?.aulas) {
+      curso.aulas.forEach(aula => aulas.push(this.criarAula(aula)));
+    } else {
+      aulas.push(this.criarAula())
+    }
+    return aulas;
+  }
+
+  private criarAula(aula: Aula = {id: '', nome: '', youtubeUrl: ''}) {
+    return this.formBuilder.group({
+      id: [aula.id],
+      nome: [aula.nome],
+      youtubeUrl: [aula.youtubeUrl]
+    })
   }
 
   onSubmit() {
