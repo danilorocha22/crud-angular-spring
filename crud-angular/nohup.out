@@ -1,0 +1,15 @@
+CompileCommand: exclude com/intellij/openapi/vfs/impl/FilePartNodeRoot.trieDescend bool exclude = true
+WARN: <resource-bundle>com.jetbrains.webstorm.WebstormCommon</resource-bundle> tag is found in an xml descriptor included into the platform part of the IDE but the platform part uses predefined bundles (e.g. ActionsBundle for actions) anyway; this tag must be replaced by a corresponding attribute in some inner tags (e.g. by 'resource-bundle' attribute in 'actions' tag)
+2023-05-29 21:58:47,357 [   5586]   WARN - #c.i.o.v.n.p.l.VfsLog - VFS Log version differs from the implementation version: log null vs implementation -43
+2023-05-29 21:58:48,311 [   6540]   WARN - #c.j.p.PluginClassPathRuntimeCustomizer - There was more than one class loaded in Projector Plugin classloader - this is likely a bug!
+2023-05-29 21:58:52,795 [  11024]   WARN - #c.i.o.w.i.s.w.StatusBarWidgetsManager - ai.codegeex.plugin.statusBar.WidgetFactory doesn't define id for extension (point=com.intellij.statusBarWidgetFactory). Please specify `id` attribute.
+Info  | RdCoroutineScope          | 49:DefaultDispatcher-worker-32 | RdCoroutineHost overridden 
+Project service: crud-angular
+2023-05-29 21:58:56,003 [  14232]   WARN - #c.i.o.a.i.ActionUpdater - 542 ms to grab EDT for ToolWindowHeader$2#update@ToolwindowTitle (com.intellij.toolWindow.ToolWindowHeader$2)
+2023-05-29 21:59:02,463 [  20692]   WARN - #c.i.i.s.p.i.BundledSharedIndexPostStartupActivity - Skipped 1 pre-built shared indexes: bundled-js-predefined-1d06a55b98c1-e95fd0b84d23-JavaScript-WS-231.9011.35
+2023-05-29 21:59:03,467 [  21696]   WARN - #c.i.o.a.i.ActionUpdater - 1125 ms to grab EDT for ToolWindowHeader$2#update@ToolwindowTitle (com.intellij.toolWindow.ToolWindowHeader$2)
+Init dataSource: Ide, 
+2023-05-29 21:59:17,674 [  35903]   WARN - #c.i.o.a.ActionStub - ActionGroup should be registered using <group> tag: id="Ignore.New" class="mobi.hsz.idea.gitignore.actions.NewFileGroupAction"
+2023-05-29 21:59:32,575 [  50804]   WARN - #c.i.o.a.i.ActionUpdater - 370 ms to grab EDT for ToggleAmendCommitModeAction#update@ChangesView.CommitToolbar (com.intellij.vcs.commit.ToggleAmendCommitModeAction)
+2023-05-29 21:59:32,648 [  50877]   WARN - #c.i.o.a.i.ActionUpdater - 398 ms to grab EDT for ExpandAllAction#update@ChangesViewToolbar (com.intellij.ide.actions.ExpandAllAction)
+2023-05-29 22:01:09,275 [ 147504]   WARN - #c.i.d.PerformanceWatcherImpl - UI was frozen for 6510ms, details saved to /home/dan/.cache/JetBrains/WebStorm2023.1/log/threadDumps-freeze-20230529-220107-WS-231.9011.35-6sec

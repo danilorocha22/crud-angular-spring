@@ -11,6 +11,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name = "aulas")
 @RequiredArgsConstructor
 public class Aula {
 
@@ -31,15 +32,15 @@ public class Aula {
     private String youtubeUrl;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "curso_id", nullable = false)
+    @JoinColumn(name = "curso_id" ,nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Curso curso;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Aula aula)) return false;
-        return Objects.equals(getId(), aula.getId());
+        if (!(o instanceof Aula a)) return false;
+        return id != null && id.equals(a.getId());
     }
 
     @Override
